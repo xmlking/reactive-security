@@ -1,0 +1,43 @@
+server:
+  port: ${PORT:8081}
+#logging:
+#  level:
+#    root: debug
+#    org.hibernate.SQL: TRACE
+spring:
+  application:
+    name: data-service
+  datasource:
+    url: jdbc:mysql://localhost:3306/demo?serverTimezone=GMT-8&useLegacyDatetimeCode=false
+    username: dbuser
+    password: dbp4ss
+    driverClassName: com.mysql.jdbc.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+#      ddl-auto: create
+#      use-new-id-generator-mappings: false
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+
+---
+spring:
+  profiles: docker
+  datasource:
+    url: jdbc:mysql://mysql:3306/demo?serverTimezone=GMT-8&useLegacyDatetimeCode=false
+    username: dbuser
+    password: dbp4ss
+    driverClassName: com.mysql.jdbc.Driver
+
+---
+spring:
+  profiles: mesos
+  datasource:
+    url: ${MYSQL_URL:jdbc:mysql://localhost:3306/demo?serverTimezone=GMT-8&useLegacyDatetimeCode=false}
+    username: ${MYSQL_USER:dbuser}
+    password: ${MYSQL_PASSWORD:dbp4ss}
+    driverClassName: com.mysql.jdbc.Driver
