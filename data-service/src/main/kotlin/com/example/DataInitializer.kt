@@ -5,20 +5,19 @@ import com.example.repository.GuestBookRepository
 import org.springframework.context.event.ContextRefreshedEvent
 import org.springframework.context.event.EventListener
 import org.springframework.stereotype.Component
-import reactor.core.publisher.Flux
 
 @Component
 class DataInitializer(val repository: GuestBookRepository) {
 
     @EventListener(ContextRefreshedEvent::class)
     fun init()  {
-//        initPosts();
+        initPosts();
         initUsers();
     }
 
     private fun initPosts() {
-        if(repository.count().block() == 0L) {
-            val entries = Flux.just(
+        if(repository.count() == 0L) {
+            val entries = listOf(
                 GuestBookEntry( "Sumo",  "comment0"),
                 GuestBookEntry("Jack Bauer", "comment1"),
                 GuestBookEntry("Chloe O'Brian", "comment2"),
@@ -26,8 +25,8 @@ class DataInitializer(val repository: GuestBookRepository) {
                 GuestBookEntry("David Palmer", "comment4"),
                 GuestBookEntry("Michelle Dessler", "comment5")
             )
-            repository.saveAll(entries).blockLast()
-            println("created test data: ${repository.count().block()}")
+            repository.saveAll(entries)
+            println("created test data: ${repository.count()}")
         }
     }
 

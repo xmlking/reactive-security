@@ -4,7 +4,7 @@ import javax.persistence.*
 
 @Entity
 data class User(
-        @Id @GeneratedValue(strategy = GenerationType.AUTO)
+        @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
         val id: Long,
         val login: String,
         @Column(name="firstname")

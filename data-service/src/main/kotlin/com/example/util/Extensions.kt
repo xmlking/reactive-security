@@ -2,9 +2,6 @@ package com.example.util
 
 import org.springframework.boot.SpringApplication
 import org.springframework.http.MediaType.*
-import org.springframework.web.reactive.function.server.ServerRequest
-import org.springframework.web.reactive.function.server.ServerResponse
-import org.springframework.web.reactive.function.server.ServerResponse.*
 import java.net.URI
 import java.text.Normalizer
 import java.time.LocalDate
@@ -24,26 +21,6 @@ import kotlin.reflect.KClass
 // ----------------------
 
 fun run(type: KClass<*>, vararg args: String) = SpringApplication.run(type.java, *args)
-
-// -------------------------
-// Spring WebFlux extensions
-// -------------------------
-
-fun ServerRequest.locale() =
-        this.headers().asHttpHeaders().acceptLanguageAsLocales.first() ?: Locale.ENGLISH
-
-fun ServerResponse.BodyBuilder.json() = contentType(APPLICATION_JSON_UTF8)
-
-fun ServerResponse.BodyBuilder.xml() = contentType(APPLICATION_XML)
-
-fun ServerResponse.BodyBuilder.html() = contentType(TEXT_HTML)
-
-fun ServerResponse.BodyBuilder.textStream() = contentType(TEXT_EVENT_STREAM)
-fun ServerResponse.BodyBuilder.jsonStream() = contentType(APPLICATION_STREAM_JSON)
-
-fun permanentRedirect(uri: String) = permanentRedirect(URI(uri)).build()
-
-fun seeOther(uri: String) = seeOther(URI(uri)).build()
 
 // --------------------
 // Date/Time extensions

@@ -48,14 +48,22 @@ subprojects {
     }
 
     dependencies {
+        // kotlin
         compile("org.jetbrains.kotlin:kotlin-stdlib-jre8")
         compile("org.jetbrains.kotlin:kotlin-reflect")
-
-        compile("org.springframework.boot:spring-boot-starter-webflux")
+        // Web
+        compile("org.springframework.boot:spring-boot-starter-web")
+        testCompile("org.springframework.boot:spring-boot-starter-test")
+        compile("com.fasterxml.jackson.module:jackson-module-kotlin")
+        compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
+        // Tooling
         compileOnly("org.springframework:spring-context-indexer")
         compile("org.springframework.boot:spring-boot-devtools")
-        testCompile("org.springframework.boot:spring-boot-starter-test")
         compile("org.springframework.boot:spring-boot-starter-actuator")
+        // Security
+        compile("org.springframework.security.oauth:spring-security-oauth2:2.2.0.RELEASE")
+        compile("org.springframework.security:spring-security-jwt")
+        testCompile("org.springframework.security:spring-security-test")
     }
 
 

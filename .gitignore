@@ -26,6 +26,9 @@ dist/
 nbdist/
 .nb-gradle/
 
+### NodeJS ###
+node_modules
+
 ### Project ###
 TODO.md
 NOTES.md

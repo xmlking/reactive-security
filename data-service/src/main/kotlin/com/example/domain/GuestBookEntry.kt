@@ -14,7 +14,7 @@ data class GuestBookEntry(
     @Column(nullable = false)
     val name: String,
     val comment: String,
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false)
     val id: Long? = null,
     @Version

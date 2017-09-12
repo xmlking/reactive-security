@@ -1,50 +1,58 @@
-package com.example.config
-
-import org.springframework.context.annotation.Bean
-import org.springframework.http.HttpMethod.DELETE
-import org.springframework.http.HttpMethod.GET
-import org.springframework.security.authorization.AuthorizationDecision
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
-import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity
-import org.springframework.security.config.web.server.HttpSecurity
-import org.springframework.security.core.Authentication
-import org.springframework.security.core.userdetails.MapUserDetailsRepository
-import org.springframework.security.core.userdetails.User
-import org.springframework.security.web.server.SecurityWebFilterChain
-import org.springframework.security.web.server.authorization.AuthorizationContext
-import org.springframework.security.web.server.util.matcher.PathMatcherServerWebExchangeMatcher
-import reactor.core.publisher.Mono
-
-
-@EnableWebFluxSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
-class SecurityConfig  /*: WebSecurityConfigurerAdapter */ {
-
-    @Bean
-    fun springWebFilterChain(http: HttpSecurity): SecurityWebFilterChain {
-        return http
-            .securityMatcher( PathMatcherServerWebExchangeMatcher("/api/**"))
-            .authorizeExchange()
-            .pathMatchers(GET, "/posts/**").permitAll()
-            .pathMatchers(DELETE, "/posts/**").hasRole("ADMIN")
-            .pathMatchers("/*/users/admin/**").hasRole("ADMIN")
-            .pathMatchers("/*/users/{user}/**").access(this::currentUserMatchesPath)
-            .anyExchange().authenticated()
-            .and()
-            .build()
-    }
-
-    private fun currentUserMatchesPath(authentication: Mono<Authentication>, context: AuthorizationContext): Mono<AuthorizationDecision> {
-        return authentication
-                .map { a -> context.variables["user"] == a.name }
-                .map { granted -> AuthorizationDecision(granted) }
-    }
-
-    @Bean
-    fun userDetailsRepository(): MapUserDetailsRepository {
-        val rob = User.withUsername("rob").password("rob").roles("USER").build()
-        val admin = User.withUsername("admin").password("admin").roles("USER", "ADMIN").build()
-        return MapUserDetailsRepository(rob, admin)
-    }
-
-}
+//package com.example.config
+//
+//import org.springframework.beans.factory.annotation.Qualifier
+//import org.springframework.beans.factory.annotation.Value
+//import org.springframework.context.annotation.Bean
+//import org.springframework.context.annotation.Configuration
+//import org.springframework.security.access.expression.method.MethodSecurityExpressionHandler
+//import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity
+//import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration
+//import org.springframework.security.config.annotation.web.builders.HttpSecurity
+//import org.springframework.security.config.http.SessionCreationPolicy
+//import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer
+//import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter
+//import org.springframework.security.oauth2.provider.expression.OAuth2MethodSecurityExpressionHandler
+//import org.springframework.security.oauth2.provider.token.TokenStore
+//import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter
+//import org.springframework.security.oauth2.provider.token.store.JwtTokenStore
+//
+//
+//@Configuration
+//@EnableResourceServer
+//class OAuth2ResourceServerConfig1(@Value("\${jwt.publicKey}") private val publicKey: String) : ResourceServerConfigurerAdapter() {
+//
+//    @Throws(Exception::class)
+//    override fun configure(http: HttpSecurity) {
+//        http
+//            .cors().and().csrf().disable()
+//            .sessionManagement()
+//            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//            .and()
+//            .authorizeRequests().antMatchers("/**").authenticated()
+//    }
+//
+//    @Bean
+//    @Qualifier("tokenStore")
+//    fun tokenStore(): TokenStore {
+//        return JwtTokenStore(jwtTokenEnhancer())
+//    }
+//
+//    @Bean
+//    protected fun jwtTokenEnhancer(): JwtAccessTokenConverter {
+//        val converter = JwtAccessTokenConverter()
+//        converter.setVerifierKey(publicKey)
+//        return converter
+//    }
+//
+//}
+//
+//
+//@Configuration
+//@EnableGlobalMethodSecurity(prePostEnabled = true)
+//class MethodSecurityConfig : GlobalMethodSecurityConfiguration() {
+//
+//    override fun createExpressionHandler(): MethodSecurityExpressionHandler {
+//        return OAuth2MethodSecurityExpressionHandler()
+//    }
+//
+//}

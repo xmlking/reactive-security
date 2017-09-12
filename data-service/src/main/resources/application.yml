@@ -1,7 +1,7 @@
 server:
-  port: ${PORT:8081}
-#logging:
-#  level:
+  port: ${PORT:8080}
+logging:
+  level:
 #    root: debug
 #    org.hibernate.SQL: TRACE
 spring:
@@ -13,7 +13,7 @@ spring:
     password: dbp4ss
     driverClassName: com.mysql.jdbc.Driver
   jpa:
-    database-platform: org.hibernate.dialect.MySQLDialect
+    database-platform: org.hibernate.dialect.MySQL5Dialect
     show-sql: true
     hibernate:
       ddl-auto: update
@@ -23,6 +23,17 @@ spring:
       hibernate:
         jdbc:
           time_zone: UTC
+jwt:
+  publicKey: |
+    -----BEGIN PUBLIC KEY-----
+    MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwjve4E4ZjLA4D8bGrmlM
+    YcdIGqDqsxkiC5Nyyi/019UfIbJBDLmAPEy0V4yNG0KAaKIhH1CLoB0m9AU3vgTW
+    HkJOsv++zzpYpW519AkHn8npdbVGR79KQD5amctquUVv72GX2GImhsGCKB0lpw/r
+    9KTMRb0WMxN88o4SHTJwxQl5f9ooENeEKe1OHAlQW25weS0y+DMCOaLS+8bPns2M
+    gjLf0xSevdF602R92ZIRsBHY6bx9fWIVTbGwEBDfqjTDcpf/EyRHcXOE3p9AO48z
+    v90OODaVnY3xg9y/x9X8uswZFZMdW28s6VO/ZXbDEWLUVIQaoew+KKJsfjLw1onV
+    +QIDAQAB
+    -----END PUBLIC KEY-----
 
 ---
 spring:

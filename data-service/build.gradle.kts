@@ -23,20 +23,11 @@ docker {
 
 dependencies {
     compile(project(":shared"))
-
 //    compile("org.springframework.boot:spring-boot-starter-data-rest")
     compile("org.springframework.boot:spring-boot-starter-data-jpa")
     compile("mysql:mysql-connector-java")
 
-    compile("org.springframework.security:spring-security-config")
-    compile("org.springframework.security:spring-security-webflux")
-
     testCompile("org.testcontainers:testcontainers:$testcontainersVersion")
-    testCompile("org.springframework.security:spring-security-test")
-    testCompile("io.projectreactor:reactor-test")
-
-    compile("com.fasterxml.jackson.module:jackson-module-kotlin")
-    compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
 }
 
 /**
