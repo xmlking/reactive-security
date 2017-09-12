@@ -8,7 +8,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 
 @Configuration
 @EnableResourceServer
-class OAuth2ResourceServerConfig : ResourceServerConfigurerAdapter() {
+class ResourceServerConfig : ResourceServerConfigurerAdapter() {
 
     @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {

@@ -40,11 +40,10 @@ class AuthServerConfig(
         endpoints
                 .tokenStore(tokenStore()).reuseRefreshTokens(false)
                 .tokenEnhancer(jwtAccessTokenConverter())
-                .authenticationManager(authenticationManager)
-
-//            endpoints
-//                .accessTokenConverter(jwtAccessTokenConverter())
-//                .authenticationManager(authenticationManager)
+                .authenticationManager(authenticationManager) // CustomUserDetailsService ???
+        //https://gigsterous.github.io/engineering/2017/03/01/spring-boot-4.html
+        //https://stackoverflow.com/questions/26208087/spring-boot-oauth-2-0-userdetails-user-not-found
+        //https://github.com/rajithd/spring-boot-oauth2/blob/master/src/main/java/com/rd/domain/User.java
     }
 
     @Throws(Exception::class)
@@ -53,34 +52,31 @@ class AuthServerConfig(
                 .tokenKeyAccess("isAnonymous() || hasAuthority('ROLE_CLIENT')")
                 .checkTokenAccess("hasAuthority('ROLE_CLIENT')")
                 .allowFormAuthenticationForClients()
-//            oauthServer
-//                .checkTokenAccess("hasAuthority('CLIENT')")
-//                .tokenKeyAccess("permitAll()")
     }
 
     @Throws(Exception::class)
     override fun configure(clients: ClientDetailsServiceConfigurer) {
         clients.inMemory()
-                .withClient("my-trusted-client")
-                .authorizedGrantTypes("password", "authorization_code", "refresh_token", "implicit")
-                .authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT")
-                .scopes("read", "write", "trust")
-                .autoApprove(true)
-                .accessTokenValiditySeconds(600)
-                .refreshTokenValiditySeconds(1600)
+                    .withClient("my-trusted-client")
+                    .authorizedGrantTypes("password", "authorization_code", "refresh_token", "implicit")
+                    .authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT")
+                    .scopes("read", "write", "trust")
+                    .autoApprove(true)
+                    .accessTokenValiditySeconds(600)
+                    .refreshTokenValiditySeconds(1600)
                 .and()
-                .withClient("my-client-with-registered-redirect")
-                .authorizedGrantTypes("authorization_code")
-                .authorities("ROLE_CLIENT")
-                .scopes("read", "trust")
-                .autoApprove(true)
-                .redirectUris("http://anywhere?key=value")
+                    .withClient("my-client-with-registered-redirect")
+                    .authorizedGrantTypes("authorization_code")
+                    .authorities("ROLE_CLIENT")
+                    .scopes("read", "trust")
+                    .autoApprove(true)
+                    .redirectUris("http://anywhere?key=value")
                 .and()
-                .withClient("my-client-with-secret")
-                .authorizedGrantTypes("client_credentials", "password")
-                .authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT")
-                .scopes("read", "write")
-                .secret("secret")
+                    .withClient("my-client-with-secret")
+                    .authorizedGrantTypes("client_credentials", "password")
+                    .authorities("ROLE_CLIENT", "ROLE_TRUSTED_CLIENT")
+                    .scopes("read", "write")
+                    .secret("secret")
     }
 
 }
