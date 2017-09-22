@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface UserRepository : PagingAndSortingRepository<User, Long> {
+    fun findOneByUsername(username: String): User?
+    fun findOneByUsernameIgnoreCase(username: String): User?
+    fun findOneByEmail(email: String): User?
 }

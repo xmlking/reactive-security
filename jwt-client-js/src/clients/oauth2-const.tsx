@@ -5,8 +5,8 @@ export const OAUTH_REVOKE_URL = 'http://localhost:8081/revoke';
 export const RESOURCED_URL = 'http://localhost:8080/userinfo';
 
 export const OAUTH_CLIENT_ID = 'my-trusted-client';
-export const USER_READER = ['reader', 'reader'];
-export const USER_WRITER = ['writer', 'writer'];
+export const USER_READER = ['actuator', 'actuator'];
+export const USER_WRITER = ['admin', 'admin'];
 
 export const oauth2GetTokens = () =>
   new RestClientStore("Login, get access & refresh token", OAUTH_URL, POST, {

@@ -25,6 +25,8 @@ gradle auth-service:test
 ### Build
 ```bash
 gradle auth-service:build
+# trigger continues build for devtools
+gradle -t auth-service:build
 # skip test
 gradle auth-service:build -x test 
 # build docker image

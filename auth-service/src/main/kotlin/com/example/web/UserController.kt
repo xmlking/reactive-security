@@ -1,6 +1,7 @@
 package com.example.web
 
 import org.springframework.http.HttpStatus
+import org.springframework.security.oauth2.provider.token.TokenStore
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore
 import org.springframework.web.bind.annotation.*
 import java.security.Principal
@@ -8,7 +9,7 @@ import javax.servlet.http.HttpServletRequest
 
 @CrossOrigin
 @RestController
-class UserController(val tokenStore: InMemoryTokenStore) {
+class UserController(val tokenStore: TokenStore) {
 
     @GetMapping("/principal")
     fun user(user: Principal): Principal {

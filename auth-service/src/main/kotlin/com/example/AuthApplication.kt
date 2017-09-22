@@ -2,11 +2,13 @@ package com.example
 
 import com.example.util.run
 import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing
 
 @SpringBootApplication
-class DataApplication
+//@EnableJpaAuditing
+class AuthApplication
 
 
 fun main(args: Array<String>) {
-    run(DataApplication::class, *args)
+    run(AuthApplication::class, *args)
 }

@@ -2,9 +2,9 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.springframework.boot.gradle.dsl.SpringBootExtension
 import org.springframework.boot.gradle.tasks.run.BootRun
 
-
 buildscript {
-    val springBootVersion = "2.0.0.M3"
+    val springBootVersion = "2.0.0.M4"
+    val junitGradleVersion = "1.0.0"
 
     repositories {
         mavenCentral()
@@ -12,6 +12,7 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:$springBootVersion")
+        classpath("org.junit.platform:junit-platform-gradle-plugin:$junitGradleVersion")
     }
 }
 
@@ -35,6 +36,7 @@ subprojects {
     apply {
         plugin("org.jetbrains.kotlin.jvm")
         plugin("org.jetbrains.kotlin.plugin.spring")
+        plugin("org.junit.platform.gradle.plugin")
         plugin("org.jetbrains.kotlin.plugin.jpa")
         plugin("org.springframework.boot")
         plugin("io.spring.dependency-management")
@@ -53,15 +55,21 @@ subprojects {
         compile("org.jetbrains.kotlin:kotlin-reflect")
         // Web
         compile("org.springframework.boot:spring-boot-starter-web")
-        testCompile("org.springframework.boot:spring-boot-starter-test")
+        testCompile("org.springframework.boot:spring-boot-starter-test") {
+            exclude(module = "junit")
+        }
+        testCompile("org.junit.jupiter:junit-jupiter-api")
+        testRuntime("org.junit.jupiter:junit-jupiter-engine")
+        testCompile("io.projectreactor:reactor-test")
         compile("com.fasterxml.jackson.module:jackson-module-kotlin")
         compile("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
         // Tooling
         compileOnly("org.springframework:spring-context-indexer")
         compile("org.springframework.boot:spring-boot-devtools")
         compile("org.springframework.boot:spring-boot-starter-actuator")
+        compile("io.micrometer:micrometer-registry-prometheus")
         // Security
-        compile("org.springframework.security.oauth:spring-security-oauth2:2.2.0.RELEASE")
+        compile("org.springframework.security.oauth:spring-security-oauth2")
         compile("org.springframework.security:spring-security-jwt")
         testCompile("org.springframework.security:spring-security-test")
     }

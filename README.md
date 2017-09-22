@@ -26,8 +26,10 @@ gradle build
 # continuous build with `-t`. 
 # this shoud be started before any run tasks i.e., `gradle ui-app:bootRun`, for spring's devtools to work.
 gradle -t build
+# build all 3 apps
+gradle build -x test -x shared:build
 # build all 3 docker images
-gradle docker
+gradle docker -x test -x shared:build
 ```
 
 ### Test
@@ -37,7 +39,7 @@ gradle test
 
 ### Run
 ##### Manual 
-Start all 3 apps: [mongo-data-service](./mongo-data-service/), [stream-service](./stream-service/), [ui-app](./ui-app/)
+Start all 3 apps: [data-service](./data-service/), [auth-service](./auth-service/), [jwt-client](./jwt-client-js/)
 > If you want to debug the app, add --debug-jvm parameter to Gradle command line
 
 ##### Docker
@@ -68,8 +70,10 @@ docker-compose exec  mysql mysql --user=root --password demo
 ### Gradle Commands
 ```bash
 # upgrade project gradle version
-gradle wrapper --gradle-version 4.2-rc-1 --distribution-type all
+gradle wrapper --gradle-version 4.2 --distribution-type all
 # gradle daemon status 
 gradle --status
 gradle --stop
+# refresh dependencies
+gradle build --refresh-dependencies
 ```

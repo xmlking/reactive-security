@@ -26,13 +26,13 @@ dist/
 nbdist/
 .nb-gradle/
 
-### NodeJS ###
-node_modules
-
 ### Project ###
 TODO.md
-NOTES.md
 todo/
 
 ### Docker ###
 .testcontainers-tmp-*
+
+node_modules
+NOTES.md
+docs/data.sql

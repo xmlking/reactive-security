@@ -1,4 +1,4 @@
-package com.example.web
+package com.example.config
 
 import org.springframework.core.Ordered
 import org.springframework.core.annotation.Order
@@ -18,7 +18,7 @@ class SimpleCorsFilter : Filter {
         val response = res as HttpServletResponse
         val request = req as HttpServletRequest
         response.setHeader("Access-Control-Allow-Origin", "*")
-        response.setHeader("Access-Control-Allow-Methods", "POST, GET, HEAD, PUT, OPTIONS, DELETE")
+        response.setHeader("Access-Control-Allow-Methods", "POST, GET, HEAD, PUT, PATCH, OPTIONS, DELETE")
         response.setHeader("Access-Control-Max-Age", "3600")
         response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization")
 
@@ -29,11 +29,9 @@ class SimpleCorsFilter : Filter {
         }
     }
 
-    @Override
     override fun init(filterConfig: FilterConfig) {
     }
 
-    @Override
     override fun destroy() {
     }
 }
